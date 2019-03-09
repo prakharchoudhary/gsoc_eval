@@ -137,7 +137,8 @@ def create_image(file, imgpath, widthPath, heightPath):
     filtered_img = medfilt(img)
 
     # plot the image and store as png
-    fig = plt.figure(figsize=(height // 100, width // 100))
+    fig = plt.figure(
+        figsize=(np.ceil(height / 100), np.ceil(width / 100)))
     plt.imshow(filtered_img)
     plt.title("Streak Image")
     plt.savefig(IMG_NAME)
@@ -149,9 +150,6 @@ def main():
     """
     One singly function to execute all above functions.
     """
-
-    # open the hdf file
-
     all_files = os.listdir(DIR_PATH)
     only_h5 = re.compile(r'^(.)+.h5$')
     h5_files = [file for file in all_files if only_h5.match(file)]
@@ -159,6 +157,7 @@ def main():
         # Executing Step 1
         create_timestamp(fname)
 
+        # Open the file
         file = h5py.File(fname, 'r')
 
         # Executing Step 2
